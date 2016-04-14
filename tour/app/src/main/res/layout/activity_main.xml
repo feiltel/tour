@@ -4,11 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
-<<<<<<< HEAD
-=======
-    tools:context=".main.MainActivity">
->>>>>>> b4dda4198d4067affec1cffeb8d8a996cdf58570
-
     android:layout_height="match_parent"
     tools:context="com.nutstudio.nutslab.MainActivity">
 

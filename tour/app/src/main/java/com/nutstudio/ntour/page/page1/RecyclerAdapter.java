@@ -6,12 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.nutstudio.ntour.R;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Random;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<Map<String, Object>> list;
@@ -29,13 +31,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        if (position%2==0) {
+        /*if (position%2==0) {
             return ITEM1;
-        } else if (position == (list.size() - 1)) {
+        } else if (position == getItemCount()-1) {
             return TYPE_FOOTER;
-        } else {
-            return ITEM2;
-        }
+        } else {*/
+        return ITEM1;
     }
 
     public interface OnItemClickCall {
@@ -58,8 +59,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             Item1ViewHolder item1ViewHolder = new Item1ViewHolder(view);
             item1ViewHolder.mImageView = (ImageView) view
                     .findViewById(R.id.im_recycler_item);
+            item1ViewHolder.topFl = (FrameLayout) view.findViewById(R.id.top_frame);
             return item1ViewHolder;
-        } else if (viewType == ITEM2) {
+        } /*else if (viewType == ITEM2) {
             View view = mInflater.inflate(R.layout.page1_recycler_item2,
                     parent, false);
             Item2ViewHolder item2ViewHolder = new Item2ViewHolder(view);
@@ -73,13 +75,35 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             footViewHolder.mImageView = (ImageView) view
                     .findViewById(R.id.im_recycler_item);
             return footViewHolder;
-        }
+        }*/
         return null;
+    }
+
+    private void setLayoutRandomHeight(View view, int a) {
+        Random rand = new Random();
+        int randNum = rand.nextInt(600) + 240;
+        ViewGroup.LayoutParams params = view.getLayoutParams();//得到item的LayoutParams布局参数
+        params.height = randNum;//把随机的高度赋予itemView布局
+        //params.width=randNum;
+        view.setLayoutParams(params);
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof Item1ViewHolder) {
+            Random rand = new Random();
+            int randNum = rand.nextInt(3);
+            if (randNum == 0) {
+                randNum = 320;
+            } else if (randNum == 1) {
+                randNum = 400;
+            } else {
+                randNum = 480;
+            }
+            ViewGroup.LayoutParams params = ((Item1ViewHolder) holder).topFl.getLayoutParams();//得到item的LayoutParams布局参数
+            params.height = randNum;//把随机的高度赋予itemView布局
+           // params.width=randNum;
+            ((Item1ViewHolder) holder).topFl.setLayoutParams(params);
             //Glide.with(context).load((String) list.get(position).get("item_img")).into(((Item1ViewHolder) holder).mImageView);
             if (mOnItemClickCall != null) {
                 ((Item1ViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
@@ -98,11 +122,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 });
             }
-        } else if (holder instanceof Item2ViewHolder) {
+        } /*else if (holder instanceof Item2ViewHolder) {
             //((Item2ViewHolder) holder).mImageView.setImageResource(R.mipmap.ic_launcher);
         } else if (holder instanceof FootViewHolder) {
             ((FootViewHolder) holder).mImageView.setImageResource(R.mipmap.ic_launcher);
-        }
+        }*/
     }
 
     public void insertItem(int position) {
@@ -122,6 +146,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public static class Item1ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImageView;
+        private FrameLayout topFl;
 
         public Item1ViewHolder(View itemView) {
             super(itemView);

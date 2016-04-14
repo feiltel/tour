@@ -27,11 +27,7 @@ public class CollectionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
     }
     @Override
     public int getItemViewType(int position) {
-        if (position == (list.size() - 1)) {
-            return TYPE_FOOTER;
-        }else{
             return ITEM1;
-        }
     }
 
     public interface OnItemClickCall {
@@ -55,13 +51,6 @@ public class CollectionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
             item1ViewHolder.mImageView = (ImageView) view
                     .findViewById(R.id.im_recycler_item);
             return item1ViewHolder;
-        } else if (viewType == TYPE_FOOTER) {
-            View view = mInflater.inflate(R.layout.recycler_item_foot,
-                    parent, false);
-            FootViewHolder footViewHolder = new FootViewHolder(view);
-            footViewHolder.mImageView = (ImageView) view
-                    .findViewById(R.id.im_recycler_item);
-            return footViewHolder;
         }
         return null;
     }
@@ -87,8 +76,6 @@ public class CollectionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
                     }
                 });
             }
-        } else if (holder instanceof FootViewHolder) {
-            ((FootViewHolder) holder).mImageView.setImageResource(R.mipmap.ic_launcher);
         }
     }
 
@@ -114,13 +101,4 @@ public class CollectionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
             super(itemView);
         }
     }
-
-    public static class FootViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mImageView;
-
-        public FootViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
-
 }
